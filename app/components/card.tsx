@@ -1,14 +1,11 @@
 import { useNavigate } from "@remix-run/react"
 import type Course from "~/utils/models/course"
-import { FaTrashAlt } from "react-icons/fa"
-import { deleteCourse } from "~/services/api"
 
 interface CardProps {
-    course: Course,
-    setData: React.Dispatch<React.SetStateAction<Course[]>>
+    course: Course
 }
 
-export default function Card({ course, setData }: CardProps) {
+export default function Card({ course }: CardProps) {
     const navigate = useNavigate()
 
     return (
@@ -24,9 +21,6 @@ export default function Card({ course, setData }: CardProps) {
                         <button type="button" className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                             onClick={() => navigate(`/course/edit/${course.id}`)}
                         >Editar</button>
-                        <button type="button" className=" inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
-                            onClick={() => deleteCourse(course.id as string).then((res: any) => setData(res.data.content as Course[]))}
-                        ><FaTrashAlt size={15} /></button>
                     </div>
 
                 </div>

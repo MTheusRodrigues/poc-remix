@@ -1,5 +1,9 @@
-import { Form } from "@remix-run/react";
+import { Form, useNavigate } from "@remix-run/react";
+import { useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import type { ActionData } from "~/routes/course.edit.$id";
+import { deleteCourse } from "~/services/api";
 import type Course from "~/utils/models/course";
 
 export interface CourseFormProps {
@@ -8,6 +12,8 @@ export interface CourseFormProps {
 }
 
 export function FormComponent({ actionData, course }: CourseFormProps) {
+  const [urlImage, setUrlImage] = useState(actionData?.formValues?.imageUrl ?? course?.imageUrl)
+  const navigate = useNavigate()
 
   return (
     <Form method="post">
@@ -23,7 +29,7 @@ export function FormComponent({ actionData, course }: CourseFormProps) {
           <div className="grid grid-cols-2 gap-1 items-center content-center">
             {/* image */}
             <div className="flex items-center	justify-center">
-              <img className="" width={300} src={course?.imageUrl} alt={course?.name} />
+              <img className="" width={300} src={urlImage} alt={actionData?.formValues?.name ?? course?.name} />
             </div>
             <div className="grid grid-cols-6">
               {/* name */}
@@ -97,6 +103,7 @@ export function FormComponent({ actionData, course }: CourseFormProps) {
                     actionData?.formValues?.imageUrl ?? course?.imageUrl
                   }
                   key={actionData?.formValues?.imageUrl ?? course?.imageUrl}
+                  onChange={(e) => setUrlImage(e.target.value)}
                   className="mt-1 block w-full border border-gray-300 
                     rounded-md shadow-sm py-2 px-3 focus:outline-none 
                     focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -107,15 +114,28 @@ export function FormComponent({ actionData, course }: CourseFormProps) {
                   </p>
                 ) : null}
               </div>
-              <div className="col-span-3 sm:col-span-6 grid py-2">
+              <div className="col-span-3 sm:col-span-6 py-2 flex flex-row items-center justify-between bg-red-200">
                 <button
                   type="submit"
-                  className="bg-indigo-600 border border-transparent rounded-md 
-                    shadow-sm mt-4 pt-2 py-2 px-4 inline-flex justify-center text-sm font-medium 
+                  className="w-6/12 bg-indigo-600 border border-transparent rounded-md 
+                    shadow-sm pt-2 py-2.5 px-6 flex justify-center text-sm font-medium 
                     text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
                     focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Save
+                </button>
+                <button type="button" className="w-3/12 px-6 py-2.5 bg-red-600 text-white font-medium text-xs flex items-center justify-center	leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                  onClick={() => {
+                    if (course?.id !== undefined) {
+                      deleteCourse(course?.id as string)
+                      navigate('/courses')
+                      return
+                    }
+                    navigate('/courses')
+                  }}
+                >
+                  {course?.id !== undefined && <> <FaTrashAlt size={15} className="mr-2" />Remover</>}
+                  {course?.id == undefined && <><MdCancel size={15} className="mr-2" />Cancelar</>}
                 </button>
               </div>
             </div>

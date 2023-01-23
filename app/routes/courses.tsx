@@ -40,7 +40,7 @@ function Courses() {
       <div className="w-11/12 grid pt-12 pb-12 grid-cols-4	">
         {data.map((course: Course) =>
           <div key={course.id} className="m-2 grid">
-            <Card course={course} setData={setData} />
+            <Card course={course} />
           </div>
         )}
       </div>
