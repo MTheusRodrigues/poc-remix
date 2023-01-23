@@ -22,7 +22,7 @@ function Courses() {
 
   useEffect(() => {
     getCourses().then(res => setData(res as Course[]))
-  }, [courses])
+  }, [])
   return (
     <div className="courses-container bg-slate-200 flex justify-center items-center flex-col	">
       <div className="w-full flex justify-center items-center">
