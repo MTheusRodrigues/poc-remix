@@ -114,7 +114,7 @@ export function FormComponent({ actionData, course }: CourseFormProps) {
                   </p>
                 ) : null}
               </div>
-              <div className="col-span-3 sm:col-span-6 py-2 flex flex-row items-center justify-between bg-red-200">
+              <div className="col-span-3 sm:col-span-6 py-2 flex flex-row items-center justify-between">
                 <button
                   type="submit"
                   className="w-6/12 bg-indigo-600 border border-transparent rounded-md 
