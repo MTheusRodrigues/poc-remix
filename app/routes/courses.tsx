@@ -26,7 +26,7 @@ function Courses() {
   return (
     <div className="courses-container bg-slate-200 flex justify-center items-center flex-col	">
       <div className="w-full flex justify-center items-center">
-        <div className="w-full bg-slate-300 flex justify-between px-12 py-12 shadow-lg">
+        <div className="w-full bg-slate-300 flex justify-between px-10 py-10 shadow-lg">
           <p>Cursos</p>
           <button
             type="button"
